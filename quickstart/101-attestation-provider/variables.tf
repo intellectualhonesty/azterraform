@@ -13,7 +13,7 @@ variable "resource_group_location" {
 variable "policy_file" {
   type        = string
   description = "File path to a valid X.509 certificate (Section 4 of RFC4648) file. Changing this forces a new resource to be created."
-  default     = "~/.certs/cert.pem"
+  default     = "./cert.pem"
 }
 
 variable "attestation_provider_name" {
