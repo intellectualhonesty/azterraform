@@ -1,27 +1,39 @@
 variable "backend_address_pool_name" {
-    default = "myBackendPool"
+  type        = string
+  description = "The name of the Backend Address Pool."
+  default     = "myBackendPool"
 }
 
 variable "frontend_port_name" {
-    default = "myFrontendPort"
+  type        = string
+  description = "The name of the Frontend Port."
+  default     = "myFrontendPort"
 }
 
 variable "frontend_ip_configuration_name" {
-    default = "myAGIPConfig"
+  type        = string
+  description = "The name of the Frontend IP Configuration."
+  default     = "myAGIPConfig"
 }
 
 variable "http_setting_name" {
-    default = "myHTTPsetting"
+  type        = string
+  description = "The name of the Backend HTTP Settings Collection."
+  default     = "myHTTPsetting"
 }
 
 variable "listener_name" {
-    default = "myListener"
+  type        = string
+  description = "The Name of the HTTP Listener."
+  default     = "myListener"
 }
 
 variable "request_routing_rule_name" {
-    default = "myRoutingRule"
+  type        = string
+  description = "The Name of this Request Routing Rule."
+  default     = "myRoutingRule"
 }
 
 variable "redirect_configuration_name" {
-    default = "myRedirectConfig"
+  default = "myRedirectConfig"
 }
