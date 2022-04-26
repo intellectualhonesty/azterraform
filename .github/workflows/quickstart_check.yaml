@@ -1,0 +1,20 @@
+---
+name: Pre Pull Request Check
+on:
+  pull_request:
+    types: ['opened', 'synchronize']
+    paths:
+      - 'quickstart/**'
+
+jobs:
+  prepr-check:
+    runs-on: self-hosted
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: test
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | cut -d/ -f1 | sort -u
+          login=$(az login --identity)
+          export ARM_SUBSCRIPTION_ID=$(echo $login | jq -r '.[0] | .id')
+          export ARM_TENANT_ID=$(echo $login | jq -r '.[0] | .tenantId')
