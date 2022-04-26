@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg1" {
-  name     = "myResourceGroupAG"
+  name     = var.resource_group_name
   location = "eastus"
 }
 
@@ -31,7 +31,6 @@ resource "azurerm_public_ip" "pip1" {
   allocation_method   = "Static"
   sku                 = "Standard"
 }
-
 
 
 resource "azurerm_application_gateway" "network" {
@@ -89,7 +88,7 @@ resource "azurerm_application_gateway" "network" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  count = 2
+  count               = 2
   name                = "nic-${count.index+1}"
   location            = azurerm_resource_group.rg1.location
   resource_group_name = azurerm_resource_group.rg1.name
@@ -102,22 +101,22 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc01" {
-  count = 2
+  count                   = 2
   network_interface_id    = azurerm_network_interface.nic[count.index].id
   ip_configuration_name   = "nic-ipconfig-${count.index+1}"
   backend_address_pool_id = azurerm_application_gateway.network.backend_address_pool[0].id
 }
 
 resource "random_password" "password" {
-  length = 16
+  length  = 16
   special = true
-  lower = true
-  upper = true
-  number = true
+  lower   = true
+  upper   = true
+  number  = true
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
-  count = 2
+  count               = 2
   name                = "myVM${count.index+1}"
   resource_group_name = azurerm_resource_group.rg1.name
   location            = azurerm_resource_group.rg1.location
@@ -144,7 +143,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 resource "azurerm_virtual_machine_extension" "vm-extensions" {
-  count = 2
+  count                = 2
   name                 = "vm${count.index+1}-ext"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm[count.index].id
   publisher            = "Microsoft.Compute"
